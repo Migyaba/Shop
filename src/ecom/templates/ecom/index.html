@@ -1,0 +1,62 @@
+{% extends 'ecom/base.html' %}
+
+{% block title %}Accueil - E-commerce{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <form class="card card-md-12">
+                <div class="card-body row no-gutters align-items-center">
+                    <div class="col">
+                        <input type="search" name="search" class="form-control form-control-borderless" placeholder="Rechercher un produit">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary">Rechercher</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        {% for product in products %}
+            <div class="col-md-3">
+                <div class="card mb-4">
+                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.price }} FCFA</p>
+                        <button id="{{product.id}}" class="btn addp btn-primary">Ajouter au panier</button>
+                        <button class="btn btn-dark" onclick="window.location.href='{% url 'product_detail' product.pk %}'">Détails</button>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    {% if products.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ products.previous_page_number }}">Précédent</a>
+                        </li>
+                    {% endif %}
+                    {% for page in products.paginator.page_range %}
+                        {% if page == products.number %}
+                            <li class="page-item active"><a class="page-link" href="#">{{ page }}</a></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if products.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ products.next_page_number }}">Suivant</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+{% endblock %}

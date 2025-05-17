@@ -1,0 +1,18 @@
+{% extends 'ecom/base.html' %}
+
+{% block title %}Détails du produit - E-commerce{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{{ product.image.url }}" class="img-fluid" alt="{{ product.name }}">
+        </div>
+        <div class="col-md-6">
+            <h1>{{ product.name }}</h1>
+            <h4>Prix : {{ product.price }} FCFA</h4>
+            <p>{{ product.description }}</p>
+            <button class="btn btn-primary">Ajouter au panier</button>
+            <p>Catégorie : {{ product.category.name }}</p>
+        </div>
+    </div>
+{% endblock %}
